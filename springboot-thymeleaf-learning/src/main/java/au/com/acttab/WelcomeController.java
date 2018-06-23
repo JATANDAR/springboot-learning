@@ -1,5 +1,7 @@
 package au.com.acttab;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ public class WelcomeController {
     public String loginMessage(Model m){
 		m.addAttribute("name", "Jatandar Dhirwani");
 		m.addAttribute("chapters", chapters);
+		m.addAttribute("toDoDate", new Date());
         return "welcome";
     }
 }
