@@ -17,7 +17,7 @@ public class ViewBasedApp {
             "Securing Your App"};
 
     @RequestMapping("/")
-    public String home(@RequestParam(value="name", defaultValue="World")String n, Model m){
+    public String home(@RequestParam(value="name", defaultValue="Jatandar Dhirwani")String n, Model m){
             m.addAttribute("name", n);
             m.addAttribute("chapters", chapters);
             return "home";
