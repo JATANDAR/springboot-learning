@@ -1,5 +1,6 @@
 package au.com.acttab;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,9 @@ public class WelcomeController {
     public String loginMessage(Model m){
 		m.addAttribute("name", "Jatandar Dhirwani");
 		m.addAttribute("chapters", chapters);
-		m.addAttribute("toDoDate", new Date());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY");
+		System.out.println("simpleDateFormat.format()=" + simpleDateFormat.format(new Date()));
+		m.addAttribute("toDoDate", simpleDateFormat.format(new Date()));
         return "welcome";
     }
 }
