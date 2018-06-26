@@ -1,0 +1,41 @@
+package au.com.acttab.controller;
+
+import javax.sql.DataSource;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+@SpringBootApplication
+public class SpringThymeleaf2Application {
+	
+	/**
+	 * https://stackoverflow.com/questions/9353167/auto-increment-id-in-h2-database
+	 * **/
+	
+	
+	@Bean(name="ds")
+	public DataSource dataSource() {
+		EmbeddedDatabaseBuilder embeddedDBBbuilder = new EmbeddedDatabaseBuilder();
+		EmbeddedDatabase embeddedDB = embeddedDBBbuilder
+				.setType(EmbeddedDatabaseType.H2)
+				.addScript("create-db.sql")
+				.addScript("insert-data.sql")
+				.build();
+		return embeddedDB;
+	}
+
+	public static void main(String[] args) {
+		try 
+		{
+		SpringApplication.run(SpringThymeleaf2Application.class, args);
+		}
+		catch(Throwable t) 
+		{
+			t.printStackTrace();
+		}
+	}
+}
