@@ -9,13 +9,14 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+import au.com.acttab.dao.impl.ToDoDAOImpl;
+
 @SpringBootApplication
 public class SpringThymeleaf2Application {
 	
 	/**
 	 * https://stackoverflow.com/questions/9353167/auto-increment-id-in-h2-database
 	 * **/
-	
 	
 	@Bean(name="ds")
 	public DataSource dataSource() {
@@ -26,6 +27,12 @@ public class SpringThymeleaf2Application {
 				.addScript("insert-data.sql")
 				.build();
 		return embeddedDB;
+	}
+	
+	@Bean(name="toDoDAOImpl")
+	public ToDoDAOImpl toDoDAOImpl() {
+		ToDoDAOImpl toDoDAOImpl = new ToDoDAOImpl(dataSource());
+		return toDoDAOImpl;
 	}
 
 	public static void main(String[] args) {
