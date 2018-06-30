@@ -8,7 +8,7 @@ public interface ToDoDAO {
 	
 	public List<ToDoDatumModel>getAllToDos();
 	public boolean delete();
-	public void editToDo(int i);
+	public void save(final ToDoDatumModel toDo);
 	public ToDoDatumModel getSpecificToDo(int i);
 	
 }

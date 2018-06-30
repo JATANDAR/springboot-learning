@@ -1,6 +1,5 @@
 package au.com.acttab.model;
 
-import java.util.Date;
 
 public class ToDoDatumModel {
 	private String description;
@@ -8,6 +7,10 @@ public class ToDoDatumModel {
 	private boolean isItDone;
 	private Integer position;
 	
+	public ToDoDatumModel() {
+		super();
+	}
+
 	public ToDoDatumModel(String description, String targetDate, boolean isItDone, Integer pos) {
 		this.description = description;
 		this.targetDate = targetDate;

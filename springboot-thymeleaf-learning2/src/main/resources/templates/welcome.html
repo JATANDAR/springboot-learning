@@ -35,8 +35,11 @@
 					<td th:text="${todo.isItDone}"/>
 					
 					<!-- @{/edit-todo/${todo.position}}  @{/delete-todo/${todo.position}} @{/order/details(id=${order.id})}-->
-					<td><a class="btn btn-warning" th:href="@{/edit-todo(id=${todo.position})}">Edit Todo</a></td>
-                    <td><a class="btn btn-warning" th:href="@{/delete-todo/${todo.position}}">Delete Todo</a></td>
+					<!-- "${'/product/edit/' + product.id}" "@{/edit-todo(id=${todo.position})}"-->	
+					<!-- "@{/delete-todo/${todo.position}}" -->		
+			
+					<td><a class="btn btn-warning" th:href="${'edit/' + todo.position}">Edit Todo</a></td>
+                    <td><a class="btn btn-warning" th:href="${'delete/' + todo.position}">Delete Todo</a></td>
 				</tr>
 				<!--  <tr>
                         <td>Todo 1</td>
