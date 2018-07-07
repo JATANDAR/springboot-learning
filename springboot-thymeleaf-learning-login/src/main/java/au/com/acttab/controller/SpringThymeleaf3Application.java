@@ -10,6 +10,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import au.com.acttab.dao.impl.ToDoDAOImpl;
+import au.com.acttab.dao.impl.UserDAOImpl;
+import au.com.acttab.service.UserService;
 
 @SpringBootApplication
 public class SpringThymeleaf3Application {
@@ -33,6 +35,18 @@ public class SpringThymeleaf3Application {
 	public ToDoDAOImpl toDoDAOImpl() {
 		ToDoDAOImpl toDoDAOImpl = new ToDoDAOImpl(dataSource());
 		return toDoDAOImpl;
+	}
+	
+	@Bean(name="userDAOImpl")
+	public UserDAOImpl userDAOImpl() {
+		UserDAOImpl userDAOImpl = new UserDAOImpl(dataSource());
+		return userDAOImpl;
+	}
+	
+	@Bean(name="userService")
+	public UserService userService() {
+		UserService userService = new UserService(userDAOImpl());
+		return userService;
 	}
 
 	public static void main(String[] args) {
