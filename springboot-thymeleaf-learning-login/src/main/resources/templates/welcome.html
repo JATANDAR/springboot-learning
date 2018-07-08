@@ -11,11 +11,25 @@
     </script>
 </head>
 <body>
+<div>
+<p th:text="'Hello, ' + ${name}"></p></div>
+<div>
+<p th:text="'Hello, ' + ${name}"></p>
+</div>
+<div>
+<p th:text="'Hello, ' + ${name}"></p>
+</div>
+<div>
+<p th:text="'Hello, ' + ${name}"></p>
+</div>
+	<div>
+		<p th:text="'Hello, ' + ${name}"></p>
+		<ol>
+			<li th:each="chapter : ${chapters}" th:text="${chapter}"></li>
+		</ol>
+	</div>
 
-	<p th:text="'Hello, ' + ${name}"></p>
-	<ol>
-		<li th:each="chapter : ${chapters}" th:text="${chapter}"></li>
-	</ol>
+	<div th:replace="fragments/header :: header">...</div>
 	<div class="container">
 		<table class="table table-striped">
 			<caption>Your todos are</caption>
@@ -30,16 +44,18 @@
 			</thead>
 			<tbody>
 				<tr th:each="todo : ${todoList}">
-					<td th:text="${todo.description}"/>
-					<td th:text="${todo.targetDate}"/>
-					<td th:text="${todo.isItDone}"/>
-					
+					<td th:text="${todo.description}" />
+					<td th:text="${todo.targetDate}" />
+					<td th:text="${todo.isItDone}" />
+
 					<!-- @{/edit-todo/${todo.position}}  @{/delete-todo/${todo.position}} @{/order/details(id=${order.id})}-->
-					<!-- "${'/product/edit/' + product.id}" "@{/edit-todo(id=${todo.position})}"-->	
-					<!-- "@{/delete-todo/${todo.position}}" -->		
-			
-					<td><a class="btn btn-warning" th:href="${'edit/' + todo.position}">Edit Todo</a></td>
-                    <td><a class="btn btn-warning" th:href="${'delete/' + todo.position}">Delete Todo</a></td>
+					<!-- "${'/product/edit/' + product.id}" "@{/edit-todo(id=${todo.position})}"-->
+					<!-- "@{/delete-todo/${todo.position}}" -->
+
+					<td><a class="btn btn-warning"
+						th:href="${'edit/' + todo.position}">Edit Todo</a></td>
+					<td><a class="btn btn-warning"
+						th:href="${'delete/' + todo.position}">Delete Todo</a></td>
 				</tr>
 				<!--  <tr>
                         <td>Todo 1</td>

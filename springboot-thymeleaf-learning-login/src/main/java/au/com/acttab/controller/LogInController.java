@@ -38,5 +38,15 @@ public class LogInController
 		model.addAttribute("loginError", "Email or password not found");
 		return "login";
 	}
+	
+	@RequestMapping(value = "/logout", method= RequestMethod.POST)
+	public String logout(Model model, HttpSession session) {
+		
+		Object attribute = session.getAttribute("loggedInUser");
+		if(attribute != null) {
+			session.removeAttribute("loggedInUser");
+		}
+		return "redirect:/welcome";
+	}
 
 }
