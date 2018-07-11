@@ -11,6 +11,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import au.com.acttab.model.User;
 import au.com.acttab.service.UserService;
 
+/**
+ * 
+ * https://stackoverflow.com/questions/20632134/accessing-session-attributes-in-thymeleaf-templates/22120387
+ * https://github.com/thymeleaf/thymeleafexamples-layouts/blob/master/src/main/webapp/WEB-INF/views/fragments/header.html
+ * https://www.thymeleaf.org/doc/articles/layouts.html
+ * http://www.baeldung.com/spring-thymeleaf-3-expressions
+ * https://github.com/jbake-org/jbake-example-project-thymeleaf/tree/master/templates
+ * https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html
+ * https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#expression-basic-objects
+ * **/
+
+
+
 
 @Controller
 public class LogInController 

@@ -38,6 +38,13 @@
                         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
                     </a>
                 </li>
+                
+                 <li th:if="${session.loggedInUser} == null">
+                    <a href="/login" th:href="@{/register}">
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Register
+                    </a>
+                </li>
+                
                 <!-- "${#authorization.expression('isAuthenticated()')}"-->
                 <li th:if="${session.loggedInUser != null}">
                  <!-- ${#session.getAttribute('loggedInUser')} -->
