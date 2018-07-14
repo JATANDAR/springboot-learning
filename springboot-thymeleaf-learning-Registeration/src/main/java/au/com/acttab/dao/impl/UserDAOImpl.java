@@ -1,11 +1,14 @@
 package au.com.acttab.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 
 import au.com.acttab.dao.UserDAO;
@@ -47,7 +50,17 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void saveUser(User user) {
-		
+		String insertSql = "insert into users (email_address, name, password, phone) values (?,?,?,?)";
+		jdbcTemplate.execute(insertSql, new PreparedStatementCallback<Boolean>() {
+
+			@Override
+			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ps.setString(1, user.getEmailAddress());
+				ps.setString(2, user.getName());
+				ps.setString(3, user.getPassword());
+				ps.setString(4, user.getPhone());
+				return ps.execute();
+			}});
 	}
 
 	@Override

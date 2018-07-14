@@ -13,7 +13,7 @@ public class UserService {
 
 	public User loginUser(User user) {
 		User foundUser = null;
-		
+
 		try 
 		{
 			foundUser =  userDAOImpl.findUser(user.getEmailAddress());
@@ -22,8 +22,22 @@ public class UserService {
 			}
 		}
 		catch(Exception ex) {}
-		
+
 		return null;
+	}
+
+	public User saveUser(User user) {
+		User foundUser = null;
+		
+		try 
+		{
+			userDAOImpl.saveUser(user);
+			foundUser = userDAOImpl.findUser(user.getEmailAddress());
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return foundUser;
 	}
 
 

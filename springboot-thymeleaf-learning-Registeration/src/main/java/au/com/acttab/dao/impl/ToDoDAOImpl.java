@@ -95,7 +95,6 @@ public class ToDoDAOImpl implements ToDoDAO {
 		//		+ ", isItDone='" + 	toDo.getIsItDone()
 		//		+ "' where id=" + toDo.getPosition()+ "");
 		String sqlUpdate = "UPDATE todo SET description=?, target_date=? , isItDone=? where id=?";
-		PreparedStatement  psc;
 		jdbcTemplate.execute(sqlUpdate, new PreparedStatementCallback<Boolean>() {
 
 			@Override
