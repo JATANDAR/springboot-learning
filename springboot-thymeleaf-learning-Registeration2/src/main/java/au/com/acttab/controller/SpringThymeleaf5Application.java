@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -11,10 +12,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import au.com.acttab.dao.impl.ToDoDAOImpl;
 import au.com.acttab.dao.impl.UserDAOImpl;
+import au.com.acttab.event.RegisteraionCompleteEventPublisher;
 import au.com.acttab.service.UserService;
 
 @SpringBootApplication
-public class SpringThymeleaf4Application {
+public class SpringThymeleaf5Application {
 	
 	/**
 	 * https://stackoverflow.com/questions/9353167/auto-increment-id-in-h2-database
@@ -48,11 +50,17 @@ public class SpringThymeleaf4Application {
 		UserService userService = new UserService(userDAOImpl());
 		return userService;
 	}
+	
+	@Bean
+	public RegisteraionCompleteEventPublisher applicationPublisher() {
+		RegisteraionCompleteEventPublisher publisher = new RegisteraionCompleteEventPublisher();
+		return publisher;
+	}
 
 	public static void main(String[] args) {
 		try 
 		{
-		SpringApplication.run(SpringThymeleaf4Application.class, args);
+		SpringApplication.run(SpringThymeleaf5Application.class, args);
 		}
 		catch(Throwable t) 
 		{

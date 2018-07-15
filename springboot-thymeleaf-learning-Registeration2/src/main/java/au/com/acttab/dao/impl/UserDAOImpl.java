@@ -38,6 +38,7 @@ public class UserDAOImpl implements UserDAO {
 				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));
 				user.setPhone(rs.getString("phone"));
+				user.setEnabled(rs.getBoolean("enabled"));
 				return user;
 			}});
 		return dbUser;
@@ -50,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void saveUser(User user) {
-		String insertSql = "insert into users (email_address, name, password, phone) values (?,?,?,?)";
+		String insertSql = "insert into users (email_address, name, password, phone, enabled) values (?,?,?,?,?)";
 		jdbcTemplate.execute(insertSql, new PreparedStatementCallback<Boolean>() {
 
 			@Override
@@ -59,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
 				ps.setString(2, user.getName());
 				ps.setString(3, user.getPassword());
 				ps.setString(4, user.getPhone());
+				ps.setBoolean(5, false);
 				return ps.execute();
 			}});
 	}
@@ -81,6 +83,7 @@ public class UserDAOImpl implements UserDAO {
 				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));
 				user.setPhone(rs.getString("phone"));
+				user.setEnabled(rs.getBoolean("enabled"));
 				return user;
 			}});
 		return dbUser;

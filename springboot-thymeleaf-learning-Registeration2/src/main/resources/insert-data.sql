@@ -7,7 +7,7 @@ insert into todo(description, target_date, isItDone) values('lalalala', NOW(), f
 insert into todo(description, target_date, isItDone) values('hello world', NOW(), false);
 
 
-insert into users (name, email_address, password) values ('First Last', 'test@test.com','test');
-insert into users (name, email_address, password) values ('admin User', 'test1@test.com', 'test');
-insert into users (name, email_address, password, phone) values ('shop Owner', 'test1@test.com', 'test', '1234567890');
-insert into users (name, email_address, password, phone) values ('Charlie Bucket', 'charlie@packtpub.com', 'charlie', '1234567890');
+insert into users (name, email_address, password, enabled) values ('First Last', 'test@test.com','test', false);
+insert into users (name, email_address, password, enabled) values ('admin User', 'testAdminUser@test.com', 'test', false);
+insert into users (name, email_address, password, phone, enabled) values ('shop Owner', 'testshopOwner@test.com', 'test', '1234567890', false);
+insert into users (name, email_address, password, phone, enabled) values ('Charlie Bucket', 'charlie@packtpub.com', 'charlie', '1234567890', false);
