@@ -3,6 +3,7 @@ package au.com.acttab.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,15 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import au.com.acttab.event.RegisterationCompleteEvent;
-import au.com.acttab.event.RegisteraionCompleteEventPublisher;
 import au.com.acttab.model.User;
 import au.com.acttab.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	//@Autowired
+	private ApplicationEventPublisher  emailPublisher;
+	
 	@Autowired
-	RegisteraionCompleteEventPublisher emailPublisher;
+	public void setEmailPublisher(ApplicationEventPublisher  emailPublisher) {
+		this.emailPublisher = emailPublisher;
+	}
 
 	@Autowired
 	private UserService userService;
@@ -35,9 +40,12 @@ public class UserController {
 		User saveUser = userService.saveUser(newUser);
 
 		//session.setAttribute("loggedInUser", saveUser);
-		try {
+		try 
+		{
+			System.out.println("email Publisher=" + emailPublisher);
 			emailPublisher.publishEvent(new RegisterationCompleteEvent(saveUser));
-		} catch (Exception me) {
+		} 
+		catch (Throwable me) {
 			me.printStackTrace();
 			//return new ModelAndView("emailError", "user", accountDto);
 		}

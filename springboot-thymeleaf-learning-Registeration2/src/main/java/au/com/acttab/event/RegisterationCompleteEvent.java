@@ -1,14 +1,17 @@
 package au.com.acttab.event;
 
-import org.springframework.context.ApplicationEvent;
-
 import au.com.acttab.model.User;
 
-public class RegisterationCompleteEvent extends ApplicationEvent {
+/**
+ * 
+ * http://zoltanaltfatter.com/2016/05/11/application-events-with-spring/
+ * */
+
+
+public class RegisterationCompleteEvent {
 	final User user;
 	
 	public RegisterationCompleteEvent(User user) {
-		super(user);
 		this.user = user;
 	}
 

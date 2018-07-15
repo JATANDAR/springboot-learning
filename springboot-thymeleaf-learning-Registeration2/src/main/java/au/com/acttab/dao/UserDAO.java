@@ -4,7 +4,6 @@ import au.com.acttab.model.User;
 
 public interface UserDAO 
 {
-	
 	public User findUser(String emailAddress);
 	public void deleteCustomer(User user);
 	public void saveUser(User user);

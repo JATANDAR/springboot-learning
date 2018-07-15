@@ -1,5 +1,7 @@
 package au.com.acttab.controller;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.springframework.boot.SpringApplication;
@@ -9,13 +11,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import au.com.acttab.dao.impl.ToDoDAOImpl;
 import au.com.acttab.dao.impl.UserDAOImpl;
-import au.com.acttab.event.RegisteraionCompleteEventPublisher;
+import au.com.acttab.dao.impl.VerificationTokenDAOImpl;
+import au.com.acttab.event.RegisterationCompleteEventListener;
+import au.com.acttab.event.RegisterationCompleteEventPublisher;
 import au.com.acttab.service.UserService;
 
 @SpringBootApplication
+@EnableAsync
 public class SpringThymeleaf5Application {
 	
 	/**
@@ -45,16 +53,48 @@ public class SpringThymeleaf5Application {
 		return userDAOImpl;
 	}
 	
+	@Bean(name="tokenVerification")
+	public VerificationTokenDAOImpl verificationTokenDAOImpl() {
+		VerificationTokenDAOImpl verificationTokenDAOImpl = new VerificationTokenDAOImpl(dataSource());
+		return verificationTokenDAOImpl;
+	}
+	
 	@Bean(name="userService")
 	public UserService userService() {
-		UserService userService = new UserService(userDAOImpl());
+		UserService userService = new UserService(userDAOImpl(), verificationTokenDAOImpl());
 		return userService;
 	}
 	
 	@Bean
-	public RegisteraionCompleteEventPublisher applicationPublisher() {
-		RegisteraionCompleteEventPublisher publisher = new RegisteraionCompleteEventPublisher();
+	public ApplicationEventPublisher  applicationPublisher() {
+		ApplicationEventPublisher publisher = new RegisterationCompleteEventPublisher();
+		//publisher.publishEvent(new RegisterationCompleteEvent(new User()));;
 		return publisher;
+	}
+	
+	@Bean
+	public RegisterationCompleteEventListener registerationCompleteListener() {
+		RegisterationCompleteEventListener l = new RegisterationCompleteEventListener();
+		return l;
+	}
+	
+	@Bean(name="mailSender")
+	public JavaMailSender javaMailSender() {
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		mailSender.setHost("smtp.gmail.com");
+	    mailSender.setPort(587);
+	     
+	    mailSender.setUsername("my.gmail@gmail.com");
+	    mailSender.setPassword("password");
+	    
+	    Properties props = mailSender.getJavaMailProperties();
+	    props.put("mail.transport.protocol", "smtp");
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    props.put("mail.debug", "true");
+	     
+	    return mailSender;
+	    
 	}
 
 	public static void main(String[] args) {

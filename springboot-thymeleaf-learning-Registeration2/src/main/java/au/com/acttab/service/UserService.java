@@ -1,14 +1,18 @@
 package au.com.acttab.service;
 
 import au.com.acttab.dao.UserDAO;
+import au.com.acttab.dao.VerificationTokenDAO;
 import au.com.acttab.model.User;
 
 public class UserService {
 
 	private UserDAO userDAOImpl;
+	
+	private VerificationTokenDAO verificationTokenDAOImpl;
 
-	public UserService(UserDAO userDAOImpl) {
+	public UserService(UserDAO userDAOImpl, VerificationTokenDAO verificationTokenDAOImpl) {
 		this.userDAOImpl = userDAOImpl;
+		this.verificationTokenDAOImpl = verificationTokenDAOImpl;
 	}
 
 	public User loginUser(User user) {
@@ -38,6 +42,10 @@ public class UserService {
 			ex.printStackTrace();
 		}
 		return foundUser;
+	}
+	
+	public void createToken(User user, String token) {
+		verificationTokenDAOImpl.saveToken(user, token);
 	}
 
 
