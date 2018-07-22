@@ -1,5 +1,7 @@
 package au.com.acttab.event;
 
+import java.io.Serializable;
+
 import au.com.acttab.model.User;
 
 /**
@@ -8,7 +10,7 @@ import au.com.acttab.model.User;
  * */
 
 
-public class RegisterationCompleteEvent {
+public class RegisterationCompleteEvent implements Serializable {
 	final User user;
 	final String appUrl;
 	

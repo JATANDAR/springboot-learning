@@ -3,10 +3,9 @@ package au.com.acttab.event;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import au.com.acttab.model.User;
@@ -27,10 +26,12 @@ public class RegisterationCompleteEventListener
 	@Autowired
 	JavaMailSender mailSender;
 
-	@Async
-	@EventListener
+	
+	@JmsListener(destination = "newUserRegisterationQueue")
 	public void verifyEmail(RegisterationCompleteEvent event) {
 		// TODO Auto-generated method stub
+		
+		System.out.println("Listener got message=" + event);
 		User user = event.getUser();
 		String uuid = UUID.randomUUID().toString();
 

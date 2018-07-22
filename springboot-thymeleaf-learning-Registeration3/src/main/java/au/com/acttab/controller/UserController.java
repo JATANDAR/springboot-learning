@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,17 +21,13 @@ import au.com.acttab.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	//@Autowired
-	private ApplicationEventPublisher  emailPublisher;
 
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
-	public void setEmailPublisher(ApplicationEventPublisher  emailPublisher) {
-		this.emailPublisher = emailPublisher;
-	}
-
+	private JmsTemplate jmsTemplate;
+	
 
 	@RequestMapping(value="/register", method = RequestMethod.GET)
 	public String register(Model model) {
@@ -46,10 +43,12 @@ public class UserController {
 		//session.setAttribute("loggedInUser", saveUser);
 		try 
 		{
-			System.out.println("email Publisher=" + emailPublisher);
+			System.out.println("email Publisher=" + jmsTemplate);
 			String appUrl = "http://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
 			System.out.println("appUrl=" + appUrl);
-			emailPublisher.publishEvent(new RegisterationCompleteEvent(saveUser, appUrl));
+			
+			jmsTemplate.convertAndSend("newUserRegisterationQueue",new RegisterationCompleteEvent(saveUser, appUrl));
+			//emailPublisher.publishEvent(new RegisterationCompleteEvent(saveUser, appUrl));
 		} 
 		catch (Throwable me) {
 			me.printStackTrace();
