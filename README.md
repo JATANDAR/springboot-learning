@@ -9,7 +9,7 @@
 ### http://localhost:8080/welcome     --------------> html page with thymeleaf, jquery, bootstrap
 
 
-The world is Built on  the shoulder of the GIANT.
+### The world is Built on  the shoulder of the GIANT.
 
-springhoot-thyemleaf-learning-Registeration3 ------- contains email verfication generation code while activemq to send email verification emails to client email addresses
-springhoot-thyemleaf-learning-Registeration2 -------- contains email verification with Spring Application Event Listener
+#springhoot-thyemleaf-learning-Registeration3 ------- contains email verfication generation code while activemq to send email verification emails to client email addresses
+#springhoot-thyemleaf-learning-Registeration2 -------- contains email verification with Spring Application Event Listener
