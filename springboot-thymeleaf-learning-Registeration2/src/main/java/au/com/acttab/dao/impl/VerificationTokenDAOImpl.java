@@ -23,7 +23,7 @@ import au.com.acttab.model.VerificationToken;
 
 
 public class VerificationTokenDAOImpl implements VerificationTokenDAO {
-	
+
 	private JdbcTemplate jdbcTemplate;
 	private DataSource ds;
 
@@ -46,7 +46,7 @@ public class VerificationTokenDAOImpl implements VerificationTokenDAO {
 			}});
 
 	}
-	
+
 	public void getToken(String token) {
 		String getTokenSQL = "select * from verificationtoken where token=?";
 		jdbcTemplate.query(getTokenSQL,new Object[] {token}, new RowMapper<VerificationToken>() {
@@ -59,18 +59,57 @@ public class VerificationTokenDAOImpl implements VerificationTokenDAO {
 				token.setTokenUUID(rs.getString("token"));
 				return null;
 			}});
-//		jdbcTemplate.execute(getTokenSQL, new PreparedStatementCallback<VerificationToken>(){
-//
-//			@Override
-//			public VerificationToken doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-//				return null;
-//			}})
+		//		jdbcTemplate.execute(getTokenSQL, new PreparedStatementCallback<VerificationToken>(){
+		//
+		//			@Override
+		//			public VerificationToken doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+		//				return null;
+		//			}})
 	}
 
 	@Override
-	public void deleteToken(long id) {
+	public void deleteToken(String token){
 		// TODO Auto-generated method stub
+		String deleteTokenSQL = "delete from verificationtoken where token='" + token + "'";
 
+		jdbcTemplate.update(deleteTokenSQL);
+
+	}
+
+	@Override
+	public VerificationToken searchToken(String token) {
+		VerificationToken verifyToken = null;
+		
+		String verifyTokenSQL = "select * from verificationtoken where token='" + token + "'" ;
+		try 
+		{
+			verifyToken =  jdbcTemplate.queryForObject(verifyTokenSQL, new RowMapper<VerificationToken>() {
+
+				@Override
+				public VerificationToken mapRow(ResultSet rs, int rowNum) throws SQLException {
+					VerificationToken token = new VerificationToken();
+					token.setEmailAddress(rs.getString("email_address"));
+					token.setId(rs.getLong("id"));
+					token.setTokenUUID(rs.getString("token"));
+					return token;
+				}});
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return verifyToken;
+
+		/*jdbcTemplate.query(getTokenSQL,new Object[] {token}, new RowMapper<VerificationToken>() {
+
+			@Override
+			public VerificationToken mapRow(ResultSet rs, int rowNum) throws SQLException {
+				VerificationToken token = new VerificationToken();
+				token.setEmailAddress(rs.getString("email_address"));
+				token.setId(rs.getLong("id"));
+				token.setTokenUUID(rs.getString("token"));
+				return null;
+			}});*/
 	}
 
 }
