@@ -14,3 +14,7 @@
 ### springhoot-thyemleaf-learning-Registeration3 ------- contains email verfication generation code while activemq to send email verification emails to client email addresses
 
 ### springhoot-thyemleaf-learning-Registeration2 -------- contains email verification with Spring Application Event Listener
+
+In memory database
+http://localhost:8080/h2
+jdbc:h2:mem:testdb
