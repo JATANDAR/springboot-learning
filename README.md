@@ -6,4 +6,15 @@
 ### http://localhost:8080/            --------------> not so dynamic page
 ### http://localhost:8080/modern      --------------> html page with thymeleaf and jquery
 
-### http://localhost:8080/welcome     --------------> html pae with thymeleaf, jquery, bootstrap
+### http://localhost:8080/welcome     --------------> html page with thymeleaf, jquery, bootstrap
+
+
+### The world is Built on  the shoulder of the GIANT.
+
+### springhoot-thyemleaf-learning-Registeration3 ------- contains email verfication generation code while activemq to send email verification emails to client email addresses
+
+### springhoot-thyemleaf-learning-Registeration2 -------- contains email verification with Spring Application Event Listener
+
+In memory database
+http://localhost:8080/h2
+jdbc:h2:mem:testdb
