@@ -13,7 +13,7 @@ import au.com.acttab.service.UserService;
 
 /**
  * https://github.com/altfatterz/application-events-with-spring/blob/master/src/main/java/com/zoltanaltfatter/events/async2/AsyncEventListenerExample.java
- * 
+ * https://memorynotfound.com/spring-boot-embedded-activemq-configuration-example/
  * **/
 
 

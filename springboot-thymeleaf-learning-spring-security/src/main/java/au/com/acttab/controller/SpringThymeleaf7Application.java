@@ -24,10 +24,11 @@ import au.com.acttab.dao.impl.UserDAOImpl;
 import au.com.acttab.dao.impl.VerificationTokenDAOImpl;
 import au.com.acttab.event.RegisterationCompleteEventListener;
 import au.com.acttab.service.UserService;
+import au.com.acttab.spring.security.WebSecurityConfig;
 
 @SpringBootApplication
 @EnableAsync
-public class SpringThymeleaf6Application {
+public class SpringThymeleaf7Application {
 
 	/**
 	 * https://stackoverflow.com/questions/9353167/auto-increment-id-in-h2-database
@@ -133,6 +134,12 @@ public class SpringThymeleaf6Application {
 		return mailSender;
 
 	}
+	
+	@Bean
+	public WebSecurityConfig config() {
+		WebSecurityConfig config = new WebSecurityConfig();
+		return config;
+	}
 
 	public static void main(String[] args) {
 		try 
@@ -145,7 +152,7 @@ public class SpringThymeleaf6Application {
 			//			props.put("mail.smtp.password", "yourpassword");
 			//			props.put("mail.smtp.port", "587"); //465
 			//			props.put("mail.smtp.auth", "true");
-			SpringApplication.run(SpringThymeleaf6Application.class, args);
+			SpringApplication.run(SpringThymeleaf7Application.class, args);
 		}
 		catch(Throwable t) 
 		{
