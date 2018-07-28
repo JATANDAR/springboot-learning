@@ -1,5 +1,7 @@
 package au.com.acttab.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,8 @@ public class LogInController
 	@RequestMapping(value = "/login", method= RequestMethod.POST)
 	public String verifyLogin(User user, Model model, HttpSession session) {
 		System.out.println("verifyLogin=" + user);
+		
+		//System.out.println("principal=" + principal.getName());
 		User loginUser = userService.loginUser(user);
 		
 		if(loginUser != null) {

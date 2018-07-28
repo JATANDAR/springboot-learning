@@ -1,10 +1,17 @@
 package au.com.acttab.spring.security;
 
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import au.com.acttab.dao.impl.UserDAOImpl;
 
 /**
  * 
@@ -26,6 +33,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * https://github.com/arunasujith/spring-boot-ldap-sample/blob/master/src/main/java/org/sample/LdapSecurity.java
  * https://dzone.com/articles/spring-boot-application-connect-to-ldap-userstore
  * https://spring.io/guides/gs/authenticating-ldap/
+ * 
+ * https://www.boraji.com/spring-security-5-jdbc-based-authentication-example
  **/
 
 
@@ -34,6 +43,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
+	private DataSource dataSource;
+	
+	private UserDetailsService userDetailsService;
+	
 	@Override
 	  public void configure(WebSecurity web) throws Exception {
 	    web
@@ -41,17 +54,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	         .antMatchers("/resources/**"); // #3
 	  }
 	
-	
+	/**
+	 * 
+	 * http://leaks.wanari.com/2017/11/28/how-to-make-custom-usernamepasswordauthenticationfilter-with-spring-security/
+	 * https://docs.spring.io/spring-security/site/docs/4.2.2.RELEASE/guides/html5/form-javaconfig.html
+	 * */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//logger.debug("Using default configure(HttpSecurity). If subclassed this will potentially override subclass configure(HttpSecurity).");
 
+		
 		http
         .authorizeRequests()
-            .antMatchers("/add-todo", "/edit*/**").authenticated()
+            .antMatchers("/add-todo", "/edit*/**","/delete*/**").authenticated()
             .antMatchers("/**").permitAll()
             .and()
-			.formLogin().loginPage("/login").permitAll().and()
+			.formLogin().loginPage("/login")
+			//.loginProcessingUrl("/login")
+			.usernameParameter("emailAddress")
+			.passwordParameter("password")
+			.defaultSuccessUrl("/welcome", true)
+            .failureUrl("/login")
+			.permitAll()
+			.and()
 			.logout()
             .permitAll();
 		/*http.authorizeRequests()
@@ -66,5 +91,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.logout()
             .permitAll();*/
 	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		System.out.println("I am at configure auth");
+		auth.userDetailsService(this.userDetailsService);
+		//auth.jdbcAuthentication().dataSource(this.dataSource)
+		//.usersByUsernameQuery("select user.email_address as user_name, user.password as password, user.enabled as enabled from users as user where user.email_address=?")
+		//.authoritiesByUsernameQuery("select email_address as user_name, authority as authority from authorities where email_address=?");
+	}
+	
+	public void setDataSource(DataSource ds) {
+		this.dataSource = ds;
+	}
+
+	public UserDetailsService getUserDetailsService() {
+		return userDetailsService;
+	}
+
+	public void setUserDetailsService(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
+	
+	
 
 }

@@ -18,6 +18,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 import au.com.acttab.dao.impl.ToDoDAOImpl;
 import au.com.acttab.dao.impl.UserDAOImpl;
@@ -136,8 +137,15 @@ public class SpringThymeleaf7Application {
 	}
 	
 	@Bean
+	public SpringSecurityDialect springSecurityDialect() {
+		return new SpringSecurityDialect();
+	}
+	
+	@Bean
 	public WebSecurityConfig config() {
 		WebSecurityConfig config = new WebSecurityConfig();
+		config.setDataSource(dataSource());
+		config.setUserDetailsService(userDAOImpl());
 		return config;
 	}
 

@@ -1,13 +1,17 @@
 package au.com.acttab.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User implements Serializable{
+public class User implements Serializable, UserDetails{
 	
 	/**
 	 * 
@@ -32,8 +36,11 @@ public class User implements Serializable{
 	
 	private boolean isEnabled;
 	
+	private Collection<au.com.acttab.model.GrantedAuthority> grantedAuths = new ArrayList<au.com.acttab.model.GrantedAuthority>();
+	
 	public User() {
 		super();
+		grantedAuths.add(new GrantedAuthority("USER"));
 	}
 	
 	
@@ -149,4 +156,51 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
+
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.name;
+	}
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return this.isEnabled;
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return (Collection<? extends org.springframework.security.core.GrantedAuthority>) grantedAuths;
+	}
+
+
+	public Collection<au.com.acttab.model.GrantedAuthority> getGrantedAuths() {
+		return grantedAuths;
+	}
+
+
+	public void setGrantedAuths(Collection<au.com.acttab.model.GrantedAuthority> grantedAuths) {
+		this.grantedAuths = grantedAuths;
+	}
+	
 }
