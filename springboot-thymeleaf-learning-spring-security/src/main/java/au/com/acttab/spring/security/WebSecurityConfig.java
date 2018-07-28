@@ -58,6 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	 * 
 	 * http://leaks.wanari.com/2017/11/28/how-to-make-custom-usernamepasswordauthenticationfilter-with-spring-security/
 	 * https://docs.spring.io/spring-security/site/docs/4.2.2.RELEASE/guides/html5/form-javaconfig.html
+	 * https://www.dontpanicblog.co.uk/2017/06/29/thymeleaf-and-spring-security/
+	 * https://www.thymeleaf.org/doc/articles/springsecurity.html
+	 * https://github.com/thymeleaf/thymeleaf-extras-springsecurity
+	 * https://stackoverflow.com/questions/29100487/how-to-get-the-role-that-a-user-logged-in-with-in-my-controller-using-spring-sec
+	 * http://www.baeldung.com/role-and-privilege-for-spring-security-registration
+	 * https://www.thymeleaf.org/doc/articles/springsecurity.html
+	 * http://www.baeldung.com/spring-security-thymeleaf
+	 * 
 	 * */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
