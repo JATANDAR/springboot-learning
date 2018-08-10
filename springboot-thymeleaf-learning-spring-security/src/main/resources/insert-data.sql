@@ -19,4 +19,8 @@ insert into authorities (email_address, authority) values ('testAdminUser@test.c
 insert into authorities (email_address, authority) values ('testshopOwner@test.com', 'USER');
 insert into authorities (email_address, authority) values ('charlie@packtpub.com', 'ROLE_ADMIN');
 insert into authorities (email_address, authority) values ('charlie@packtpub.com', 'USER');
+
 insert into authorities (email_address, authority) values ('jatandar.dhirwani@gmail.com', 'ROLE_ADMIN');
+insert into authorities (email_address, authority) values ('jatandar.dhirwani@gmail.com', 'DELETE');
+insert into authorities (email_address, authority) values ('jatandar.dhirwani@gmail.com', 'READ');
+insert into authorities (email_address, authority) values ('jatandar.dhirwani@gmail.com', 'WRITE');

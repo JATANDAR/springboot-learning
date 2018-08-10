@@ -46,7 +46,8 @@ public class ToDoDAOImpl implements ToDoDAO {
 
 	@Override
 	public List<ToDoDatumModel> getAllToDos() {
-		if(this.toDoList.isEmpty()) {
+		if(this.toDoList.isEmpty()) 
+		{
 			synchronized(this.toDoList) 
 			{
 				this.toDoList = jdbcTemplate.query("select * from todo", new RowMapper<ToDoDatumModel>() 
@@ -70,9 +71,36 @@ public class ToDoDAOImpl implements ToDoDAO {
 	}
 
 	@Override
-	public boolean delete() {
-		return false;
+	public void delete(int id) {
+		jdbcTemplate.execute("delete from todo where id=" + id);
+		refresh();
+		//return true;
 	}
+
+	private void refresh() {
+		if(!this.toDoList.isEmpty()) 
+		{
+			synchronized(this.toDoList) 
+			{
+				this.toDoList = jdbcTemplate.query("select * from todo", new RowMapper<ToDoDatumModel>() 
+				{
+
+					@Override
+					public ToDoDatumModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+						ToDoDatumModel todo= new ToDoDatumModel(rs.getString("description"),
+								simpleDateFormat.format(rs.getDate("target_date")),
+								rs.getBoolean("isItDone"), 
+								rs.getInt("id"));
+						System.out.println("getAllToDos() todo=" + todo);
+						return todo;
+					}});
+
+			}
+		}
+		
+	}
+
 
 	@Override
 	public void save(final ToDoDatumModel toDo) {

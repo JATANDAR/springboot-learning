@@ -76,6 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         .authorizeRequests()
             .antMatchers("/add-todo", "/edit*/**","/delete*/**").authenticated()
             .antMatchers("/**").permitAll()
+            .antMatchers("/h2/**").permitAll()
             .and()
 			.formLogin().loginPage("/login")
 			//.loginProcessingUrl("/login")
